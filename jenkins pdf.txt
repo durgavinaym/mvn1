@@ -1,0 +1,40 @@
+Syntax of Scripted Pipeline
+================================
+node('master')
+{
+   stage('Stage name in ci-cd')
+   {
+     Groovy code to implement this stage
+   }
+}
+
+Syntax of Declarative Pipeline
+===================================
+pipeline
+{
+  agent any
+  stages
+  {
+    stage('Stage name in CI-CD')
+    {
+      steps
+      {
+         Groovy code to implement this stage
+      }
+    }
+}
+
+
+syntax of Exception Handaling
+====================================
+
+
+try
+{
+
+}
+
+catch(Exception e)
+{
+
+}

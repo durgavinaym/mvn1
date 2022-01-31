@@ -1,0 +1,53 @@
+
+
+Syntax of Scripted Pipeline
+================================
+node('master')
+{
+   stage('Stage name in ci-cd')
+   {
+     Groovy code to implement this stage
+   }
+}
+
+Syntax of Declarative Pipeline
+===================================
+pipeline
+{
+  agent any
+  stages
+  {
+    stage('Stage name in CI-CD')
+    {
+      steps
+      {
+         Groovy code to implement this stage
+      }
+    }
+}
+
+Scripted pipe line code
+
+node('build-in') 
+{
+  stage('ContinuousDownload') 
+  {
+    git 'https://github.com/intelliqittrainings/maven.git'
+  }
+  stage('ContinuousBuild')
+  {
+    sh 'mvn package'
+  }
+  stage('ContinuousDeployment')
+  {
+    deploy adapters: [tomcat9(credentialsId: '51ce93b4-eb13-4c25-8908-1c8bdb04428b', path: '', url: 'http://172.31.25.255:8080')], contextPath: 'qaapp', war: '**/*.war'
+  }
+  stage('ContinuousTesting')
+  {
+      git 'https://github.com/intelliqittrainings/FunctionalTesting.git'
+      sh 'java -jar /home/ubuntu/.jenkins/workspace/Scriptedpipeline/testing.jar'( give the path location of the jarfile first excute only git repo)
+  }
+  stage('ContinuousDelivery')
+  {
+      deploy adapters: [tomcat9(credentialsId: '51ce93b4-eb13-4c25-8908-1c8bdb04428b', path: '', url: 'http://172.31.21.238:8080')], contextPath: 'prodapp', war: '**/*.war'
+  }
